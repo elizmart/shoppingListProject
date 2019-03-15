@@ -1,0 +1,6 @@
+@media print {
+    #form, #clearListButton, #printButton, .deleteEdit, .footerText, .title, .input, #listOfLists {
+        display: none;
+    }
+
+}

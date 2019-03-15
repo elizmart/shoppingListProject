@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shopping List</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="screenStyle.css" media="screen">
+    <link rel="stylesheet" href="printStyle.css" media="print">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="shoppingList.js"></script>
+    <script src="userManagement.js"></script>
+</head>
+<body onload="typeWriter();  getAllListNames()">
+<div class="jumbotron">
+    <h1 id="header"></h1>
+    </div>
+<div id="registerButtons">
+
+    <button style="visibility: hidden" id="login" onclick="alert()">Log In</button>
+
+
+    <button style="visibility: hidden" id="registerButton"><a href="" data-toggle="modal" data-target="#modalRegisterForm">Register</a></button>
+
+
+</div>
+<div class="container-fluid">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-4">
+               <p class="title">Create a new list</p>
+                <br><input class="input" id="myListName" onfocus="this.value=''"
+                                                               type="text" onkeypress="javascript:doit_onkeypress_listName(event);"/>
+                <ul id="listOfLists"></ul></div>
+            <div class="col-sm-8">
+                <p class="title" id="hiddenTitle"  style="visibility: hidden"></p>
+                <div id="form" style="visibility: hidden">
+
+                    <br>
+                    <label for="myProduct">Product: </label><input class="input"  id="myProduct" onfocus="this.value=''"
+                                                                   type="text" onkeypress="javascript:doit_onkeypress(event);"/>
+                    <label for="myAmount">Amount: </label><input class="input"  id="myAmount" onfocus="this.value=''"
+                                                                 type="text"onkeypress="javascript:doit_onkeypress(event);"/>
+                    <button id="addButton" onclick="createJsonFromInput()">Add</button>
+                </div>
+
+                <ul id="myList"></ul>
+
+
+                <button style="visibility: hidden" id="printButton" onclick="window.print()">Print</button>
+
+            </div>
+            </div>
+        </div>
+
+</div>
+</body>
+<footer class="footer">
+    <div class="footerText">Find your nearest food store with <a href="https://www.google.com/maps">GoogleMaps<i class="material-icons">place</i></a>
+    </div>
+    <div class="footerText">© 2019 Copyright:
+        <a href="https://www.linkedin.com/in/elizamart/"> Liza Martynova</a>
+    </div>
+</footer>
+
+
+
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="regForm" class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="registrationName" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="registrationName">Your name</label>
+                    <p id="userNameIsTakenWarning"style="visibility: hidden; color: red"  >This username is taken</p>
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="email" id="registrationEmail" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="registrationEmail">Your email</label>
+                    <p id="invalidEmail"style="visibility: hidden; color: red"  >Invalid email</p>
+                </div>
+
+                <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="password" id="registrationPassword" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="registrationPassword">Your password</label>
+                    <p style="font-size: small">Password must be 5 or more symbols long</p>
+                    <p id="shortPassword"style="visibility: hidden; color: red"  >Password must be 5 or more symbols long</p>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button id='regButton' class="sendRegistrationInfoButton" onclick="createJsonFromUserRegistrationForm()">Register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>
