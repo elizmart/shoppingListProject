@@ -20,11 +20,8 @@
     </div>
 <div id="registerButtons">
 
-    <button style="visibility: hidden" id="login" onclick="alert()">Log In</button>
-
-
+    <button style="visibility: hidden" id="login"> <a href="" data-toggle="modal" data-target="#modalLoginForm">Log In</a></button>
     <button style="visibility: hidden" id="registerButton"><a href="" data-toggle="modal" data-target="#modalRegisterForm">Register</a></button>
-
 
 </div>
 <div class="container-fluid">
@@ -74,7 +71,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+                <h4 class="modal-title w-100 font-weight-bold">Register</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -98,7 +95,7 @@
                     <input type="password" id="registrationPassword" class="form-control validate">
                     <label data-error="wrong" data-success="right" for="registrationPassword">Your password</label>
                     <p style="font-size: small">Password must be 5 or more symbols long</p>
-                    <p id="shortPassword"style="visibility: hidden; color: red"  >Password must be 5 or more symbols long</p>
+                    <p id="shortPassword"style="visibility: hidden; color: red">Password must be 5 or more symbols long</p>
                 </div>
 
             </div>
@@ -107,6 +104,44 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div id='logInForm' class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Log In</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="email" id="defaultForm-username" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-username">Username</label>
+                    <p id="wrongUsername"style="visibility: hidden; color: red">Wrong Username</p>
+                </div>
+
+                <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="password" id="defaultForm-pass" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Password</label>
+                    <p id="wrongPassword"style="visibility: hidden; color: red">Wrong Password</p>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button id="logInButton" class="btn btn-default" onclick="getLoginInfo()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+
 </div>
 
 

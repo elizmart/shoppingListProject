@@ -5,7 +5,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,19 +16,7 @@ public class GetUser extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        try {
-//            String req = RequestReader.readRequest(request);
-//            System.out.println(req + ": request successful");
-//            ListCollectionDAO listCollectionDAO = new ListCollectionDAO();
-//            String json = new Gson().toJson(listCollectionDAO.getAllLists());
-//            ResponseWriter.writeResponse(response, json);
-//        } catch (Exception e) {
-//            response.sendError(400, e.getMessage());
-//        }
     }
-
-
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -39,32 +26,20 @@ public class GetUser extends HttpServlet {
             String email = newUser.getEmail();
             String password = newUser.getPassword();
 
-            if (userNameExists(userName)){
+            if (userNameExists(userName)) {
                 ResponseWriter.writeStringResponse(response, "false");
-            }
-
-            else  {
+            } else {
                 if (!isValidEmailAddress(email)) {
                     ResponseWriter.writeStringResponse(response, "invalidEmail");
 
-                }
-
-                else if (!passwordIsValid(password)){
+                } else if (!passwordIsValid(password)) {
                     ResponseWriter.writeStringResponse(response, "shortPassword");
-                }
-                else {
+                } else {
                     UserDAO userDAO = new UserDAO();
                     userDAO.addUser(newUser);
                     ResponseWriter.writeStringResponse(response, "true");
                 }
-
-
-
             }
-
-
-
-
         } catch (Exception e) {
             response.sendError(400, e.getMessage());
         }
@@ -87,8 +62,8 @@ public class GetUser extends HttpServlet {
         return result;
     }
 
-    private boolean passwordIsValid(String password){
-        return (password.length()>4);
+    private boolean passwordIsValid(String password) {
+        return (password.length() > 4);
     }
 }
 
