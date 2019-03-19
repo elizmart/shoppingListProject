@@ -29,18 +29,11 @@ public class GetLoginInfo extends HttpServlet {
                 actualPassword = userPOJO.getPassword();
                 if (!actualPassword.equals(password)) {
                     ResponseWriter.writeStringResponse(response, "Wrong Password");
+                } else {
+                    ResponseWriter.writeResponse(response, new Gson().toJson(userPOJO));
                 }
-                else {
-                    ResponseWriter.writeStringResponse(response, "Correct combination");
-                }
-                }
-
-
-
-        }
-
-
-        catch (Exception e) {
+            }
+        } catch (Exception e) {
             response.sendError(400, e.getMessage());
         }
     }
