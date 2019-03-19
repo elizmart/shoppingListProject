@@ -2,6 +2,7 @@ var itemStatus = "active";
 var parentListId = 1;
 
 
+
 //Hit enter to add an item (replacing button)
 function doit_onkeypress(event) {
     if (event.keyCode === 13 || event.which === 13) {
@@ -81,7 +82,7 @@ function getResponseWithAllListNames() {
 
 function createListJsonFromInput() {
     var paramListName = document.getElementById('myListName').value;
-    var listJson = {"name": paramListName};
+    var listJson = {"name": paramListName, "userId": 1};
     saveNewLists(listJson);
 }
 
@@ -95,12 +96,10 @@ function saveNewLists(listJson) {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.send(data);
-    getAllListNames();
-
-}
+ }
 
 function OnPostResponseForList() {
-    if (this.readyState === 4) {
+       if (this.readyState === 4) {
         if (this.status === 200) {
             var jsonFromResponse = JSON.parse(this.responseText);
             parentListId = jsonFromResponse.id;
@@ -112,6 +111,7 @@ function OnPostResponseForList() {
 
 
 function displayListNamesOnload(jsonFromResponse) {
+    console.log("Display list names...");
     var listOfLists = document.getElementById("listOfLists");
     listOfLists.innerHTML = '';
     for (var i = 0; i < jsonFromResponse.length; i++) {

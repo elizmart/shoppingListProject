@@ -1,3 +1,5 @@
+var userId = 1;
+
 function createJsonFromUserRegistrationForm() {
     var paramUserName = document.getElementById("registrationName").value;
     var paramEmail = document.getElementById("registrationEmail").value;
@@ -50,11 +52,12 @@ function displayNameIsTaken(responseText){
 
 }
 
+
 function getLoginInfo(){
     console.log("getLoginInfo is called...");
     var username = document.getElementById("defaultForm-username").value;
     var password = document.getElementById("defaultForm-pass").value;
-    var userAndPassword = {"id":1, "username":username, "email": "some mail", "password":password};
+    var userAndPassword = {"username":username, "password":password};
     logIn(userAndPassword);
 }
 
@@ -63,15 +66,15 @@ function logIn(userAndPassword){
     var data = JSON.stringify(userAndPassword);
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-    xhr.addEventListener("readystatechange", OnGetResponseForSaveUser);
+    xhr.addEventListener("readystatechange", OnPostResponseForLogIn);
     xhr.open("POST", document.URL + "getLogin");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.send(data);
 }
 
-function OnGetResponseForSaveUser() {
-    console.log("OnGetResponseForSaveUser...");
+function OnPostResponseForLogIn() {
+    console.log("OnPostResponseForLogIn...");
 
         if (this.readyState === 4) {
             if (this.status === 200) {
@@ -90,10 +93,10 @@ function displayWrongUsernameOrPassword(responseText){
     if (responseText === "Wrong Password"){
         document.getElementById("wrongPassword").style.visibility = 'visible';
     }
-    if (responseText === "AllowLogIn") {
+    if (responseText === "Correct combination"){
         document.getElementById("logInForm").innerHTML = "You are logged in";
-        //function to load lists by user id
         document.getElementById("logInButton").style.visibility = 'hidden';
     }
-}
+    }
+
 

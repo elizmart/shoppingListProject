@@ -25,7 +25,8 @@ public class ListCollectionDAO implements AutoCloseable {
     private ListCollectionPOJO listCollectionFromResultSet(ResultSet rs) throws SQLException {
         return new ListCollectionPOJO(
                 rs.getInt(1),
-                rs.getString(2));
+                rs.getString(2),
+                rs.getInt(3));
     }
 
 
@@ -45,8 +46,9 @@ public class ListCollectionDAO implements AutoCloseable {
 
 
     public void addList(ListCollectionPOJO collectionList) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO liza.listcollection (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO liza.listcollection (name, user_id) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, collectionList.getName());
+            stmt.setInt(2, collectionList.getUserId());
             stmt.executeUpdate();
             if (collectionList.getId() == null) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -74,6 +76,21 @@ public class ListCollectionDAO implements AutoCloseable {
         try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM liza.listcollection  WHERE id = ?")) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
+        } finally {
+            conn.close();
+        }
+    }
+
+    public List<ListCollectionPOJO> getAllListsByUserId(int userId) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement("select * from liza.listcollection where user_id=? order by id desc")) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<ListCollectionPOJO> collectionList = new ArrayList<>();
+                while (rs.next()) {
+                    collectionList.add(listCollectionFromResultSet(rs));
+                }
+                return collectionList;
+            }
         } finally {
             conn.close();
         }

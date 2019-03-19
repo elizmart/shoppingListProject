@@ -54,12 +54,22 @@ public class UserDAO implements AutoCloseable {
         try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM liza.user WHERE username=?")) {
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
-                return new UserPOJO(userFromResultSet(rs).getId(), userFromResultSet(rs).getUsername(), userFromResultSet(rs).getEmail(), userFromResultSet(rs).getPassword());
+                if (rs.next()) {
+                    return userFromResultSet(rs);
+                }
+                else
+                    return null;
+
+
             }
         } finally {
             conn.close();
         }
     }
+
+
+
+
 
 
     public List<String> getAllUserNames() throws SQLException {
@@ -78,6 +88,10 @@ public class UserDAO implements AutoCloseable {
         }
 
     }
+
+
+
+
 
     public List<UserPOJO> getAllUsers() throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement("select * from liza.listcollection")) {

@@ -28,8 +28,11 @@ public class GetList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             ListCollectionPOJO newList = new Gson().fromJson(RequestReader.readRequest(request), ListCollectionPOJO.class);
+
             ListCollectionDAO listCollectionDAO = new ListCollectionDAO();
+            System.out.println(newList.getId());
             listCollectionDAO.addList(newList);
+
 
             String json = new Gson().toJson(newList);
             ResponseWriter.writeResponse(response, json);
