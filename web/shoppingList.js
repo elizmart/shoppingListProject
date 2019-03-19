@@ -48,7 +48,7 @@ function typeWriter() {
 
 
 function makeRegisterButtonVisible(){
-    document.getElementById("registerButton").style.visibility = 'visible';
+    document.getElementById("register").style.visibility = 'visible';
 }
 
 
