@@ -60,12 +60,12 @@ function makeLoginButtonVisible(){
 
 function getAllListNames() {
 
-    var data = "Request from showAllListNames";
+    var data = userId;
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", getResponseWithAllListNames);
-    xhr.open("GET", document.URL + "getList");
-    xhr.setRequestHeader("Content-Type", "string");
+    xhr.open("POST", document.URL + "getListsByUserId");
+    xhr.setRequestHeader("Content-Type", "text");
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.send(data);
 }
@@ -76,6 +76,7 @@ function getResponseWithAllListNames() {
             var jsonFromResponse = JSON.parse(this.responseText);
             console.log(this.responseText);
             displayListNamesOnload(jsonFromResponse);
+
         }
     }
 }
@@ -113,6 +114,7 @@ function OnPostResponseForList() {
 
 function displayListNamesOnload(jsonFromResponse) {
     console.log("Display list names...");
+    document.getElementById('mainContainer').style.visibility = 'visible';
     var listOfLists = document.getElementById("listOfLists");
     listOfLists.innerHTML = '';
     for (var i = 0; i < jsonFromResponse.length; i++) {
@@ -549,6 +551,7 @@ function displayWrongUsernameOrPassword(responseText) {
         var jsonFromResponseText = JSON.parse(responseText);
         console.log(jsonFromResponseText.id);
         userId = jsonFromResponseText.id;
+        getAllListNames();
     }
 }
 

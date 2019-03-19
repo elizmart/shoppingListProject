@@ -37,7 +37,32 @@ body {
     padding: 5px 15px;
 }
 
+#login, #register{
+    font-family: Bikarosta;
+    border-style: hidden;
+    border-radius: 10px;
+    box-shadow: 5px 10px 18px #888888;
+    padding: 10px;
+    text-align: center;
+    background: linear-gradient(-20deg, #ffe6e6 30%, #c2f0c2 70%);
+    max-width: 50px;
+    font-size: 40px;
+    margin: auto;
+    text-decoration:none;
+}
 
+#login{
+    margin-right: 30px;
+}
+
+.modal-content{
+    background: linear-gradient(-20deg, #ffe6e6 30%, #c2f0c2 70%);
+}
+
+.modal-title{
+    font-family: Bikarosta;
+    font-size: 40px;
+}
 
 #deleteItem {
     display: inline-block;
@@ -48,7 +73,7 @@ body {
     padding: 5px 5px;
 }
 
-#addButton, #registerButton, #login{
+#addButton{
 
     display: inline-block;
     background-color: #aeffb4;
@@ -156,6 +181,8 @@ br {
 #listOfLists{
     text-align: left;
 }
+
+
 
 
 

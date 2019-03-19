@@ -11,21 +11,21 @@
     <link rel="stylesheet" href="screenStyle.css" media="screen">
     <link rel="stylesheet" href="printStyle.css" media="print">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--<script src="userManagement.js"></script>-->
-    <script src="shoppingList.js"></script>
+     <script src="shoppingList.js"></script>
 
 </head>
-<body onload="typeWriter();  getAllListNames()">
+<body onload="typeWriter()">
 <div class="jumbotron">
     <h1 id="header"></h1>
+    <div id="registerButtons">
+
+        <span id="login">  <a style="text-decoration:none" href="" data-toggle="modal" data-target="#modalLoginForm">Log In</a></span>
+        <span id="register"><a style="text-decoration:none" href="" data-toggle="modal" data-target="#modalRegisterForm">Register</a></span>
+        <!--<button style="visibility: hidden" id="login"> <a href="" data-toggle="modal" data-target="#modalLoginForm">Log In</a></button>-->
     </div>
-<div id="registerButtons">
+    </div>
 
-    <button style="visibility: hidden" id="login"> <a href="" data-toggle="modal" data-target="#modalLoginForm">Log In</a></button>
-    <button style="visibility: hidden" id="registerButton"><a href="" data-toggle="modal" data-target="#modalRegisterForm">Register</a></button>
-
-</div>
-<div class="container-fluid">
+<div class="container-fluid" id="mainContainer" style="visibility: hidden">
     <div class="container">
 
         <div class="row">
@@ -72,7 +72,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Register</h4>
+                <p class="modal-title w-100">Register</p>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -113,7 +113,7 @@
     <div  class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Log In</h4>
+                <p class="modal-title w-100">Log In</p>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

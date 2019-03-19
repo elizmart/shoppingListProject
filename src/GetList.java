@@ -12,15 +12,15 @@ import com.google.gson.Gson;
 public class GetList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String req = RequestReader.readRequest(request);
-            System.out.println(req + ": request successful");
-            ListCollectionDAO listCollectionDAO = new ListCollectionDAO();
-            String json = new Gson().toJson(listCollectionDAO.getAllLists());
-            ResponseWriter.writeResponse(response, json);
-        } catch (Exception e) {
-            response.sendError(400, e.getMessage());
-        }
+//        try {
+//            String req = RequestReader.readRequest(request);
+//            System.out.println(req + ": request successful");
+//            ListCollectionDAO listCollectionDAO = new ListCollectionDAO();
+//            String json = new Gson().toJson(listCollectionDAO.getAllLists());
+//            ResponseWriter.writeResponse(response, json);
+//        } catch (Exception e) {
+//            response.sendError(400, e.getMessage());
+//        }
     }
 
 
@@ -28,7 +28,6 @@ public class GetList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             ListCollectionPOJO newList = new Gson().fromJson(RequestReader.readRequest(request), ListCollectionPOJO.class);
-
             ListCollectionDAO listCollectionDAO = new ListCollectionDAO();
             System.out.println(newList.getId());
             listCollectionDAO.addList(newList);
