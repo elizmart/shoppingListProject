@@ -5,7 +5,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,54 +16,36 @@ public class GetUser extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        try {
-//            String req = RequestReader.readRequest(request);
-//            System.out.println(req + ": request successful");
-//            ListCollectionDAO listCollectionDAO = new ListCollectionDAO();
-//            String json = new Gson().toJson(listCollectionDAO.getAllLists());
-//            ResponseWriter.writeResponse(response, json);
-//        } catch (Exception e) {
-//            response.sendError(400, e.getMessage());
-//        }
+        try {
+            String name = RequestReader.readParameterisedRequest(request, response, "username");
+            String password = RequestReader.readParameterisedRequest(request, response, "password");
+            String actualPassword = null;
+
+
+            UserDAO userDAO = new UserDAO();
+            UserPOJO userPOJO = userDAO.getUserByName(name);
+            if (userPOJO == null) {
+                ResponseWriter.writeStringResponse(response, "Wrong Username");
+            } else {
+                actualPassword = userPOJO.getPassword();
+                if (!actualPassword.equals(password)) {
+                    ResponseWriter.writeStringResponse(response, "Wrong Password");
+                } else {
+                    ResponseWriter.writeResponse(response, new Gson().toJson(userPOJO));
+                }
+            }
+        } catch (Exception e) {
+            response.sendError(400, e.getMessage());
+        }
     }
-
-
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-
             UserPOJO newUser = new Gson().fromJson(RequestReader.readRequest(request), UserPOJO.class);
             String userName = newUser.getUsername();
             String email = newUser.getEmail();
             String password = newUser.getPassword();
-
-            if (userNameExists(userName)){
-                ResponseWriter.writeStringResponse(response, "false");
-            }
-
-            else  {
-                if (!isValidEmailAddress(email)) {
-                    ResponseWriter.writeStringResponse(response, "invalidEmail");
-
-                }
-
-                else if (!passwordIsValid(password)){
-                    ResponseWriter.writeStringResponse(response, "shortPassword");
-                }
-                else {
-                    UserDAO userDAO = new UserDAO();
-                    userDAO.addUser(newUser);
-                    ResponseWriter.writeStringResponse(response, "true");
-                }
-
-
-
-            }
-
-
-
-
+            checkRegistrationInfo(response, newUser, userName, email, password);
         } catch (Exception e) {
             response.sendError(400, e.getMessage());
         }
@@ -89,6 +70,28 @@ public class GetUser extends HttpServlet {
 
     private boolean passwordIsValid(String password){
         return (password.length()>4);
+    }
+
+    private void checkRegistrationInfo(HttpServletResponse response, UserPOJO newUser, String userName, String email, String password) throws SQLException, IOException {
+        if (userNameExists(userName)){
+            ResponseWriter.writeStringResponse(response, "false");
+        }
+
+        else  {
+            if (!isValidEmailAddress(email)) {
+                ResponseWriter.writeStringResponse(response, "invalidEmail");
+
+            }
+
+            else if (!passwordIsValid(password)){
+                ResponseWriter.writeStringResponse(response, "shortPassword");
+            }
+            else {
+                UserDAO userDAO = new UserDAO();
+                userDAO.addUser(newUser);
+                ResponseWriter.writeStringResponse(response, "true");
+            }
+        }
     }
 }
 

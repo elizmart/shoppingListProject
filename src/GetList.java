@@ -3,7 +3,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -13,6 +12,15 @@ public class GetList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        try {
+            String parameter = RequestReader.readParameterisedRequest(request, response, "userId");
+            int userId = Integer.parseInt(parameter);
+            ListCollectionDAO listCollectionDAO = new ListCollectionDAO();
+            String json = new Gson().toJson(listCollectionDAO.getAllListsByUserId(userId));
+            ResponseWriter.writeResponse(response, json);
+        } catch (Exception e) {
+            response.sendError(400, e.getMessage());
+        }
     }
 
 

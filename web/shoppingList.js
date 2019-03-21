@@ -56,15 +56,14 @@ function makeLoginButtonVisible(){
     document.getElementById("login").style.visibility = 'visible';
 }
 
-// Logic functions starts here...
 
 function getAllListNames() {
 
-    var data = userId;
+    var data = null;
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", getResponseWithAllListNames);
-    xhr.open("POST", document.URL + "getListsByUserId");
+    xhr.open("GET", document.URL + "getList?userId="+userId);
     xhr.setRequestHeader("Content-Type", "text");
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.send(data);
@@ -106,7 +105,6 @@ function OnPostResponseForList() {
             var jsonFromResponse = JSON.parse(this.responseText);
             parentListId = jsonFromResponse.id;
             getAllListNames();
-
         }
     }
 }
@@ -175,11 +173,11 @@ function OnPostResponse() {
 
 
 function callItemsById(jsonFromResponse) {
-    var data = JSON.stringify(jsonFromResponse);
+    var data = null;
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", OnPostResponseForItemsSortedById);
-    xhr.open("POST", document.URL + "getItemsById");
+    xhr.open("GET", document.URL + "getItems?parentList="+parentListId);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.send(data);
@@ -209,8 +207,6 @@ function displayItemsById(itemsSortedById) {
         listItem.appendChild(createButtons(itemsSortedById[i], listItem));
     }
     showHiddenButton();
-
-
 }
 
 
@@ -293,9 +289,7 @@ function deleteList(jsonFromInput) {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.send(data);
-
 }
-
 
 function createDoneButton(jsonFromInput) {
     var doneButton = document.createElement("button");
@@ -357,7 +351,6 @@ function createEditButton(jsonFromInput) {
 
     return editButton;
 }
-
 
 function createEditListNameButton(jsonFromInput) {
     var editListNameButton = document.createElement("button");
@@ -452,9 +445,6 @@ function validateInput(product, amount) {
 }
 
 
-
-
-
 function createJsonFromUserRegistrationForm() {
     var paramUserName = document.getElementById("registrationName").value;
     var paramEmail = document.getElementById("registrationEmail").value;
@@ -516,12 +506,12 @@ function getLoginInfo() {
 }
 
 function logIn(userAndPassword) {
-    console.log(userAndPassword.username + userAndPassword.password);
-    var data = JSON.stringify(userAndPassword);
+
+    var data = null;
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", OnPostResponseForLogIn);
-    xhr.open("POST", document.URL + "getLogin");
+    xhr.open("GET", document.URL + "getUser?username="+userAndPassword.username+"&password="+userAndPassword.password);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.send(data);
