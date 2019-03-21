@@ -20,20 +20,9 @@ public class GetUser extends HttpServlet {
             String name = RequestReader.readParameterisedRequest(request, response, "username");
             String password = RequestReader.readParameterisedRequest(request, response, "password");
             String actualPassword = null;
-
-
             UserDAO userDAO = new UserDAO();
             UserPOJO userPOJO = userDAO.getUserByName(name);
-            if (userPOJO == null) {
-                ResponseWriter.writeStringResponse(response, "Wrong Username");
-            } else {
-                actualPassword = userPOJO.getPassword();
-                if (!actualPassword.equals(password)) {
-                    ResponseWriter.writeStringResponse(response, "Wrong Password");
-                } else {
-                    ResponseWriter.writeResponse(response, new Gson().toJson(userPOJO));
-                }
-            }
+            checkloginInfo(userPOJO, response, password);
         } catch (Exception e) {
             response.sendError(400, e.getMessage());
         }
@@ -90,6 +79,19 @@ public class GetUser extends HttpServlet {
                 UserDAO userDAO = new UserDAO();
                 userDAO.addUser(newUser);
                 ResponseWriter.writeStringResponse(response, "true");
+            }
+        }
+    }
+    
+    private void checkloginInfo(UserPOJO userPOJO, HttpServletResponse response, String password) throws IOException {
+        if (userPOJO == null) {
+            ResponseWriter.writeStringResponse(response, "Wrong Username");
+        } else {
+           String actualPassword = userPOJO.getPassword();
+            if (!actualPassword.equals(password)) {
+                ResponseWriter.writeStringResponse(response, "Wrong Password");
+            } else {
+                ResponseWriter.writeResponse(response, new Gson().toJson(userPOJO));
             }
         }
     }
